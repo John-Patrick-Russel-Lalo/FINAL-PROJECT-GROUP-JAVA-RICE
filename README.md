@@ -4,6 +4,8 @@
 
 # Inventory Management System
 
+![LEZGOOO](https://pin.it/ywkIGYxHJ)
+
 ## Project Overview
 This project is a comprehensive **Inventory Management System** developed as part of an Object-Oriented Programming (OOP) course project. The system is designed to address the challenges faced by our client in managing product inventory and expiration dates effectively. By developing this system, we aim to streamline inventory operations, improve tracking, and ensure the client has up-to-date information on product stock and expiration status.
 
