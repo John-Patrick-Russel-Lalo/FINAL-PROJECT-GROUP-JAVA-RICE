@@ -27,26 +27,26 @@ Our primary objectives for this project include the following features:
    - Generate alerts or notifications for low-stock items and upcoming expiration dates.
 
 5. **List System**:
-   - Create custom lists based on specific criteria (e.g., products expiring soon, low-stock items).
+   - Create custom lists based on specific criteria.
    - Enable efficient tracking and grouping of items for organized management.
 
 ## Project Structure
 The project is organized into modules that focus on specific functionalities:
-- **Frontend (GUI)**: Built using [mention the library or framework, e.g., JavaFX/Swing if using Java], providing a graphical interface for user interaction.
+- **Frontend (GUI)**: Built using JavaFX/Swing, providing a graphical interface for user interaction.
 - **Backend (Inventory and List System)**: Core logic for inventory management, including tracking, categorizing, and handling data for inventory and lists.
-- **Database**: Centralized storage using [mention the database being used, e.g., MySQL, SQLite] to maintain data integrity and support smooth data operations.
+- **Database**: Centralized storage using MySQL to maintain data integrity and support smooth data operations.
 
 ## How to Use
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/yourusername/yourrepository.git
+   git clone https://github.com/John-Patrick-Russel-Lalo/FINAL-PROJECT---GROUP-JAVA-RICE
    ```
 
 2. **Setup the Database**:
-   - Ensure the database is properly configured by [add any specific instructions for setting up the database if needed].
+   - Ensure the database is properly configured
 
 3. **Run the Application**:
-   - [Add instructions on how to compile and run the project, especially if it's in Java with command-line instructions or an IDE].
+   - Use any IDE to run the Project/Application
 
 ## Contributing
 We welcome contributions to improve this project! Please follow these steps:
