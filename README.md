@@ -38,8 +38,7 @@ Our primary objectives for this project include the following features:
 
 ---
 
-## Developers Doing Their Best to Achieve this Goal
-
+## Developers:
 
 ![WORKING HARD](https://media.tenor.com/y2JXkY1pXkwAAAAM/cat-computer.gif)
 ---
