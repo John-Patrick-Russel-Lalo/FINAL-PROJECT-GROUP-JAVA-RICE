@@ -9,6 +9,11 @@
 ## Project Overview
 This project is a comprehensive **Inventory Management System** developed as part of an Object-Oriented Programming (OOP) course project. The system is designed to address the challenges faced by our client in managing product inventory and expiration dates effectively. By developing this system, we aim to streamline inventory operations, improve tracking, and ensure the client has up-to-date information on product stock and expiration status.
 
+---
+![SHEESH](https://i.pinimg.com/originals/06/60/ef/0660efe82fa3da42ed56eef013171835.gif)
+---
+
+
 ## Features and Goals
 Our primary objectives for this project include the following features:
 
