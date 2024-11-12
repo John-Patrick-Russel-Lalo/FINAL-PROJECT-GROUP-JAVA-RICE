@@ -58,119 +58,81 @@ public class sheesh{
 
 
         // Buttons for the Product
-        JTextField inputTextName = new JTextField("Name");
-        inputTextName.setSize(100, 100);
-        inputTextName.setBounds(50, 50, 115, 30);
+        JTextField inputName = new JTextField("Name");
+        inputName.setSize(100, 100);
+        inputName.setBounds(50, 50, 115, 30);
         
-        JTextField inputTextName1 = new JTextField("Price");
-        inputTextName1.setSize(100, 100);
-        inputTextName1.setBounds(50, 90, 115, 30);
+        JTextField inputPrice = new JTextField("Price");
+        inputPrice.setSize(100, 100);
+        inputPrice.setBounds(50, 90, 115, 30);
 
-        JTextField inputTextName2 = new JTextField("Quantity");
-        inputTextName2.setSize(100, 100);
-        inputTextName2.setBounds(50, 130, 115, 30);
+        JTextField inputQuantity = new JTextField("Quantity");
+        inputQuantity.setSize(100, 100);
+        inputQuantity.setBounds(50, 130, 115, 30);
 
         //Button for EXPDate
-        JTextField inputTextName3 = new JTextField("MM");
-        inputTextName3.setSize(100, 100);
-        inputTextName3.setBounds(50, 170, 35, 30);
+        JTextField inputMonth = new JTextField("MM");
+        inputMonth.setSize(100, 100);
+        inputMonth.setBounds(50, 170, 35, 30);
 
-        JTextField inputTextName4 = new JTextField("DD");
-        inputTextName4.setSize(100, 100);
-        inputTextName4.setBounds(90, 170, 35, 30);
+        JTextField inputDay = new JTextField("DD");
+        inputDay.setSize(100, 100);
+        inputDay.setBounds(90, 170, 35, 30);
 
-        JTextField inputTextName5 = new JTextField("YY");
-        inputTextName5.setSize(100, 100);
-        inputTextName5.setBounds(130, 170, 35, 30);
+        JTextField inputYear = new JTextField("YY");
+        inputYear.setSize(100, 100);
+        inputYear.setBounds(130, 170, 35, 30);
          
         // Add and Remove Product
         JButton addBtn = new JButton("Add Product");
         addBtn.setSize(115, 30);
         addBtn.setLocation(200,80);
 
-        JButton addBtn1 = new JButton("Remove Product");
-        addBtn1.setSize(115, 30);
-        addBtn1.setLocation(200,120);
+        JButton removeBtn = new JButton("Remove Product");
+        removeBtn.setSize(115, 30);
+        removeBtn.setLocation(200,120);
       
         addBtn.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-                String tempName = inputTextName.getText();
-                String tempName1 = inputTextName1.getText();
-                String tempName2 = inputTextName2.getText();
+                String tempName = inputName.getText();
                 double tempPrice = 0;
                 int tempQuantity = 0;
 
                 box.setName(tempName);
-                box.setName(tempName1);
-                box.setName(tempName2);
                 box.setPrice(tempPrice);
                 box.setQuantity(tempQuantity);
                 box.setExpiration(tempMonth, tempDay, tempYear);
                 label1.setText("Product Name: " + box.displayName());
                 box.addProduct();
 
-                inputTextName.setText(null);
-                inputTextName1.setText(null);
-                inputTextName2.setText(null);
+                inputName.setText(null);
             }
 
         });
 
-        addBtn1.addActionListener(new ActionListener(){
+        removeBtn.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-                String tempName = inputTextName.getText();
-                String tempName1 = inputTextName1.getText();
-                String tempName2 = inputTextName2.getText();
+                String tempName = inputName.getText();
                 double tempPrice = 0;
                 int tempQuantity = 0;
 
                 box.setName(tempName);
-                box.setName(tempName1);
-                box.setName(tempName2);
                 box.setPrice(tempPrice);
                 box.setQuantity(tempQuantity);
                 box.setExpiration(tempMonth, tempDay, tempYear);
                 label1.setText("Product Name: " + box.displayName());
                 box.addProduct();
 
-                inputTextName.setText(null);
-                inputTextName1.setText(null);
-                inputTextName2.setText(null);
+                inputName.setText(null);
             }
 
         });
 
-        frame.add(inputTextName);
-        frame.add(addBtn);
-        frame.add(addBtn1);
-        frame.add(label1);
+        frame.add(inputName);
 
-        frame.add(inputTextName1);
-        frame.add(addBtn);
-        frame.add(addBtn1); 
-        frame.add(label1);
-
-        frame.add(inputTextName2);
-        frame.add(addBtn);
-        frame.add(addBtn1);
-        frame.add(label1);
-
-        frame.add(inputTextName3);
-        frame.add(addBtn);
-        frame.add(addBtn1); 
-        frame.add(label1);
-
-        frame.add(inputTextName4);
-        frame.add(addBtn);
-        frame.add(addBtn1); 
-        frame.add(label1);
-
-        frame.add(inputTextName5);
-        frame.add(addBtn);
-        frame.add(addBtn1); 
-        frame.add(label1);
+        
 
         frame.add(Panel,BorderLayout.NORTH);
         
