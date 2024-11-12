@@ -58,9 +58,10 @@ The project is organized into modules that focus on specific functionalities:
 **or**
 
 
-**Cloning 
+**Cloning by Url**
+*just copy this url*
 ```
-
+https://github.com/John-Patrick-Russel-Lalo/FINAL-PROJECT---GROUP-JAVA-RICE
 ```
 
 
