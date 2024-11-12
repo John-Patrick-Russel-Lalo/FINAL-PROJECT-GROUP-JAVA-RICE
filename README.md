@@ -55,6 +55,17 @@ The project is organized into modules that focus on specific functionalities:
    git clone https://github.com/John-Patrick-Russel-Lalo/FINAL-PROJECT---GROUP-JAVA-RICE
    ```
 
+**or**
+
+
+**Cloning 
+```
+
+```
+
+
+
+
 2. **Setup the Database**:
    - Ensure the database is properly configured
 
