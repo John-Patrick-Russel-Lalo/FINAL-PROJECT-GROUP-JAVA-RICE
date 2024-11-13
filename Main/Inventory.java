@@ -2,78 +2,51 @@ import java.util.ArrayList;
 
 import java.util.List;
 
-public class Inventory  {
-    private List<Product> products;
-    String name;
-    double price;
-    int quantity;
-    String expDate = "11/12/2028";
+import javax.swing.DefaultListModel;
+import javax.swing.JList;
 
-    public Inventory() {
-        products = new ArrayList<>();
-    }
+public class Inventory  {
+    
+    private DefaultListModel<Product> listModel = new DefaultListModel<>();
+    private JList<Product> products = new JList<>(listModel);
+    
+
+    String productName;
+    double productPrice;
+    int productQuantity;
+    String productExpDate = "11/12/2028";
 
     public void setName(String name){
-        this.name = name;
+        this.productName = name;
     }
 
     public void setPrice(double price){
-        this.price = price;
+        this.productPrice = price;
     }
 
     public void setQuantity(int quantity){
-        this.quantity = quantity;
+        this.productQuantity = quantity;
     }
 
     public void setExpiration(int Month, int Day, int Year){
-        this.expDate = Integer.toString(Month) + "/" + Integer.toString(Day) + "/" + Integer.toString(Year);
+        this.productExpDate = Integer.toString(Month) + "/" + Integer.toString(Day) + "/" + Integer.toString(Year);
     }
 
     public String displayName(){
-        return this.name;
+        return this.productName;
     }
 
     public String displayExpDate(){
-        return expDate;
+        return productExpDate;
     }
 
     // Method to add a product to the inventory
     public void addProduct() {
-        Product pro = new Product(name, price, quantity, expDate);
-        products.add(pro);
-        System.out.println(pro.getName() + " added to inventory.");
-        System.out.println(products.toString()); // display all from list
-        name = "";
-        price = 0.00;
-        quantity = 0;
-        expDate = "";
+        this.listModel.addElement(new Product(productName, productPrice, productQuantity, productExpDate));
+
+        System.out.println(listModel.toString());
     }
 
-    public void removeProduct() {
-        // Assuming `name` is the identifier for the product to remove
-        Product productToRemove = null;   
-        // Iterate over the list to find the product by name
-        for (Product pro : products) {
-            if (pro.getName().equals(name)) {
-                productToRemove = pro;
-                break;
-            }
-        }
-        // If the product is found, remove it from the list
-        if (productToRemove != null) {
-            products.remove(productToRemove);
-            System.out.println(productToRemove.getName() + " removed from inventory.");
-        } else {
-            System.out.println("Product not found.");
-        }
-        // Reset fields after removal
-        name = "";
-        price = 0.00;
-        quantity = 0;
-        expDate = "";
-        // Optionally, display the updated inventory
-        System.out.println(products.toString());
-    }
     
     
 }
