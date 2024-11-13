@@ -30,12 +30,7 @@ public class iventoryGUI{
 
         PanelList.setBackground(Color.BLUE);
 
-        box.setName("Adobo");
-        box.setPrice(50.10);
-        box.setQuantity(20);
-        box.setExpiration(11, 2, 2076);
-        box.addProduct();
-        box.removeProduct();
+       
 
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -46,6 +41,7 @@ public class iventoryGUI{
 
         JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, PanelInventory, PanelList);
         splitPane.setDividerLocation(300);
+        splitPane.setBackground(Color.BLACK);
 
 
         // Buttons for the Product
@@ -83,51 +79,21 @@ public class iventoryGUI{
         removeBtn.setSize(115, 30);
         removeBtn.setLocation(200,120);
       
-        addBtn.addActionListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String tempName = inputName.getText();
-                double tempPrice = 0;
-                int tempQuantity = 0;
-
-                box.setName(tempName);
-                box.setPrice(tempPrice);
-                box.setQuantity(tempQuantity);
-                box.setExpiration(tempMonth, tempDay, tempYear);
-                label1.setText("Product Name: " + box.displayName());
-                box.addProduct();
-
-                inputName.setText(null);
-            }
-
-        });
-
-        removeBtn.addActionListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String tempName = inputName.getText();
-                double tempPrice = 0;
-                int tempQuantity = 0;
-
-                box.setName(tempName);
-                box.setPrice(tempPrice);
-                box.setQuantity(tempQuantity);
-                box.setExpiration(tempMonth, tempDay, tempYear);
-                label1.setText("Product Name: " + box.displayName());
-                box.addProduct();
-
-                inputName.setText(null);
-            }
-
-        });
-
+        
+        //inventory
         PanelInventory.add(inputName);
         PanelInventory.add(inputPrice);
         PanelInventory.add(inputQuantity);
         PanelInventory.add(inputMonth);
+        PanelInventory.add(inputDay);
+
+
+
+        //list
+
         
         frame.getContentPane().add(splitPane);
-
+       
         
 
         
