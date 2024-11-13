@@ -6,9 +6,11 @@ import java.awt.event.ActionListener;
 
 
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.plaf.basic.BasicSplitPaneUI;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
@@ -29,7 +31,7 @@ public class iventoryGUI{
         PanelInventory.setBackground(Color.GREEN);
 
         PanelList.setBackground(Color.BLUE);
-
+        // test test test
        
 
 
