@@ -11,11 +11,12 @@ public class Inventory  {
     DefaultListModel<Product> listModel = new DefaultListModel<>();
     JList<Product> products = new JList<>(listModel);
     
-
+    int productID;
+    int productIDTemp = 0;
     String productName;
     Double productPrice;
     int productQuantity;
-    String productExpDate = "11/12/2028";
+    String productExpDate;
 
     public void setName(String name){
         this.productName = name;
@@ -29,8 +30,12 @@ public class Inventory  {
         this.productQuantity = quantity;
     }
 
-    public void setExpiration(int Month, int Day, int Year){
-        this.productExpDate = Integer.toString(Month) + "/" + Integer.toString(Day) + "/" + Integer.toString(Year);
+    public void setExpiration(String Month, String Day, String Year){
+        this.productExpDate = Month + "/" + Day + "/" + Year;
+    }
+
+    public void setID(int ID){
+        this.productIDTemp = ID;
     }
 
     public String displayName(){
@@ -41,24 +46,28 @@ public class Inventory  {
         return productExpDate;
     }
 
-    public JList getProducts(){
-        return products;
-    }
+    
 
     // Method to add a product to the inventory
     public void addProduct() {
-        this.listModel.addElement(new Product(productName, productPrice, productQuantity, productExpDate));
-
+        this.listModel.addElement(new Product(productID, productName, productPrice, productQuantity, productExpDate));
         System.out.println(this.listModel.toString());
+
+        this.productID += 1;
     }
 
     public void removeProduct(int indexselect){
-  
         if (indexselect != -1) {
             this.listModel.remove(indexselect);
         } else {
             System.out.println("The product has been already remove");
         }
+        System.out.println(this.listModel.toString());
+    }
+
+    public void updateProduct(){
+        Product pro = this.listModel.getElementAt(productIDTemp);
+        this.listModel.setElementAt(pro, productIDTemp);
     }
 
     

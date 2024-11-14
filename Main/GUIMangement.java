@@ -29,8 +29,9 @@ public class GUIMangement extends JFrame{
 
    JPanel PanelInventory;
    JList<Product> list = inventory.products;
-   JTextField inputName, inputPrice, inputQuantity, inputMonth, inputDay, inputYear;
-   JButton addBtn, removeBtn;
+   JTextField inputName, inputPrice, inputQuantity, inputMonth, inputDay, inputYear, inputProductID;
+   JButton addBtn, removeBtn, updateBtn;
+   int ID;
 
    public GUIMangement(){
         this.setResizable(true);
@@ -92,6 +93,8 @@ public class GUIMangement extends JFrame{
         ExpPanel.add(inputDay);
         ExpPanel.add(inputYear);
 
+        inputProductID = new JTextField();
+        inputProductID.setPreferredSize(new Dimension(10, 10));
          
 
         addBtn = new JButton();
@@ -113,6 +116,14 @@ public class GUIMangement extends JFrame{
           }
         });
 
+        updateBtn = new JButton();
+        updateBtn.setText("Update Product");
+        updateBtn.addActionListener(new ActionListener() {
+          @Override
+          public void actionPerformed(ActionEvent e){
+            updateProductGUI();
+          }
+        });
 
 
         this.getContentPane().add(splitPane);
@@ -122,6 +133,8 @@ public class GUIMangement extends JFrame{
         TopPanel.add(inputQuantity);
         TopPanel.add(ExpPanel);
         TopPanel.add(addBtn);
+        TopPanel.add(updateBtn);
+        TopPanel.add(inputProductID);
 
 
         inventory.products = new JList<>(inventory.listModel);
@@ -132,6 +145,8 @@ public class GUIMangement extends JFrame{
 
         BottomPanel.add(listScrollPane);
         BottomPanel.add(removeBtn);
+
+        
         
        
 
@@ -142,12 +157,18 @@ public class GUIMangement extends JFrame{
         String productName = inputName.getText();
         Double productPrice = Double.parseDouble(inputPrice.getText());
         int productQuantity = Integer.parseInt(inputQuantity.getText());
+        String productMonth = inputMonth.getText();
+        String productDay = inputDay.getText();
+        String productYear = inputYear.getText();
           
         inventory.setName(productName);
         inventory.setPrice(productPrice);
         inventory.setQuantity(productQuantity);
+        inventory.setExpiration(productMonth, productDay, productYear);
 
         inventory.addProduct();
+
+
         
         
     }
@@ -157,8 +178,24 @@ public class GUIMangement extends JFrame{
         inventory.removeProduct(SelectedIndex);
     }
 
-    public void update(){
-        
+    public void updateProductGUI(){
+      String productName = inputName.getText();
+      Double productPrice = Double.parseDouble(inputPrice.getText());
+      int productQuantity = Integer.parseInt(inputQuantity.getText());
+      String productMonth = inputMonth.getText();
+      String productDay = inputDay.getText();
+      String productYear = inputYear.getText();
+      int productID = Integer.parseInt(inputProductID.getText());
+
+      inventory.setName(productName);
+      inventory.setPrice(productPrice);
+      inventory.setQuantity(productQuantity);
+      inventory.setExpiration(productMonth, productDay, productYear);
+      inventory.setID(productID);
+
+      inventory.updateProduct();
+
+      
     }
    
 }
