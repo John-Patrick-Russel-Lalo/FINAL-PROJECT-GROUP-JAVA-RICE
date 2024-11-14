@@ -1,5 +1,5 @@
 import java.awt.BorderLayout;
-import java.awt.Color;
+import java.awt.Color; //lalo
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
@@ -155,6 +155,10 @@ public class GUIMangement extends JFrame{
     public void removeProductGUI(){
         int SelectedIndex = list.getSelectedIndex();
         inventory.removeProduct(SelectedIndex);
+    }
+
+    public void update(){
+        
     }
    
 }
