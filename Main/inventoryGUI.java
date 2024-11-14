@@ -12,9 +12,12 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.plaf.basic.BasicSplitPaneUI;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 
 public class inventoryGUI extends JFrame{
@@ -24,11 +27,16 @@ public class inventoryGUI extends JFrame{
    int tempDay = 0;
    int tempYear = 0;
 
+   JPanel PanelInventory;
+   JList<Product> list = inventory.products;
+   JTextField inputName, inputPrice, inputQuantity, inputMonth, inputDay, inputYear;
+   JButton addBtn, removeBtn;
+
    public inventoryGUI(){
         this.setResizable(true);
         this.setSize(900, 500);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        JPanel PanelInventory = new JPanel();
+        PanelInventory = new JPanel();
         PanelInventory.setMinimumSize(new Dimension(300, 300));
         JPanel PanelList = new JPanel();
         PanelList.setMinimumSize(new Dimension(300, 300));
@@ -50,7 +58,7 @@ public class inventoryGUI extends JFrame{
         BottomPanel.setMaximumSize(new Dimension(200, 200));
         BottomPanel.setMinimumSize(new Dimension(200, 300));
         BottomPanel.setBackground(Color.CYAN);
-        BottomPanel.setLayout(new BorderLayout());
+        BottomPanel.setLayout(new FlowLayout());
         
         TopPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
@@ -60,24 +68,24 @@ public class inventoryGUI extends JFrame{
 
         JSplitPane SplitInventory = new JSplitPane(JSplitPane.VERTICAL_SPLIT, TopPanel, BottomPanel);
         
-        JTextField inputName = new JTextField();
+        inputName = new JTextField();
         inputName.setSize(100, 20);
 
-        JTextField inputPrice = new JTextField();
+        inputPrice = new JTextField();
         inputPrice.setSize(100, 20);
 
-        JTextField inputQuantity = new JTextField();
+        inputQuantity = new JTextField();
 
         JPanel ExpPanel = new JPanel();
         ExpPanel.setBackground(Color.RED);
         ExpPanel.setLayout(new FlowLayout());
         ExpPanel.setPreferredSize(new Dimension(150, 50));
 
-        JTextField inputMonth = new JTextField();
+        inputMonth = new JTextField();
         inputMonth.setPreferredSize(new Dimension(150, 50));
-        JTextField inputDay = new JTextField();
+        inputDay = new JTextField();
         inputDay.setPreferredSize(new Dimension(150, 50));
-        JTextField inputYear = new JTextField();
+        inputYear = new JTextField();
         inputYear.setPreferredSize(new Dimension(150, 50));
 
         ExpPanel.add(inputMonth);
@@ -86,9 +94,27 @@ public class inventoryGUI extends JFrame{
 
          
 
-        JButton addBtn = new JButton();
+        addBtn = new JButton();
         addBtn.setPreferredSize(new Dimension(150, 50));
         addBtn.setText("Add Product");
+        addBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e){
+              addProductGUI();
+            }
+        });
+
+        removeBtn = new JButton();
+        removeBtn.setText("Remove Product");
+        removeBtn.addActionListener(new ActionListener() {
+          @Override
+          public void actionPerformed(ActionEvent e){
+            removeProductGUI();
+          }
+        });
+
+
+
         this.getContentPane().add(splitPane);
         PanelInventory.add(SplitInventory, BorderLayout.CENTER);
         TopPanel.add(inputName);
@@ -97,13 +123,41 @@ public class inventoryGUI extends JFrame{
         TopPanel.add(ExpPanel);
         TopPanel.add(addBtn);
 
-       
+
+        inventory.products = new JList<>(inventory.listModel);
+        inventory.products.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        inventory.products.setVisibleRowCount(5);
         
+        JScrollPane listScrollPane = new JScrollPane(list);
+
+        BottomPanel.add(listScrollPane);
+        BottomPanel.add(removeBtn);
+        
+       
 
         this.setVisible(true);
     }
+
+    public void addProductGUI(){
+        String productName = inputName.getText();
+        Double productPrice = Double.parseDouble(inputPrice.getText());
+        int productQuantity = Integer.parseInt(inputQuantity.getText());
+          
+        inventory.setName(productName);
+        inventory.setPrice(productPrice);
+        inventory.setQuantity(productQuantity);
+
+        inventory.addProduct();
+        
+        
+    }
+
+    public void removeProductGUI(){
+        int SelectedIndex = list.getSelectedIndex();
+        inventory.removeProduct(SelectedIndex);
+    }
    
-      public static void main(String[] args) {
+    public static void main(String[] args) {
        new inventoryGUI();
     }
 
