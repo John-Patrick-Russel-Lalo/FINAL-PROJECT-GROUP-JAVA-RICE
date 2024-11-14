@@ -20,7 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 
-public class inventoryGUI extends JFrame{
+public class GUIMangement extends JFrame{
    Inventory inventory = new Inventory();
    
    int tempMonth = 0; 
@@ -32,7 +32,7 @@ public class inventoryGUI extends JFrame{
    JTextField inputName, inputPrice, inputQuantity, inputMonth, inputDay, inputYear;
    JButton addBtn, removeBtn;
 
-   public inventoryGUI(){
+   public GUIMangement(){
         this.setResizable(true);
         this.setSize(900, 500);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -156,10 +156,5 @@ public class inventoryGUI extends JFrame{
         int SelectedIndex = list.getSelectedIndex();
         inventory.removeProduct(SelectedIndex);
     }
-   
-    public static void main(String[] args) {
-       new inventoryGUI();
-    }
-
    
 }
