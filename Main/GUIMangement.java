@@ -93,10 +93,6 @@ public class GUIMangement extends JFrame{
         ExpPanel.add(inputDay);
         ExpPanel.add(inputYear);
 
-        inputProductID = new JTextField();
-        inputProductID.setPreferredSize(new Dimension(10, 10));
-         
-
         addBtn = new JButton();
         addBtn.setPreferredSize(new Dimension(150, 50));
         addBtn.setText("Add Product");
@@ -134,7 +130,7 @@ public class GUIMangement extends JFrame{
         TopPanel.add(ExpPanel);
         TopPanel.add(addBtn);
         TopPanel.add(updateBtn);
-        TopPanel.add(inputProductID);
+        
 
 
         inventory.products = new JList<>(inventory.listModel);
@@ -185,17 +181,17 @@ public class GUIMangement extends JFrame{
       String productMonth = inputMonth.getText();
       String productDay = inputDay.getText();
       String productYear = inputYear.getText();
-      int productID = Integer.parseInt(inputProductID.getText());
+      
+      int SelectedIndex = list.getSelectedIndex();
 
       inventory.setName(productName);
       inventory.setPrice(productPrice);
       inventory.setQuantity(productQuantity);
       inventory.setExpiration(productMonth, productDay, productYear);
-      inventory.setID(productID);
-
-      inventory.updateProduct();
-
       
+
+      inventory.updateProduct(SelectedIndex);
+
     }
    
 }

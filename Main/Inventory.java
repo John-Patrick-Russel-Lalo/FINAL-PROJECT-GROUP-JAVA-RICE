@@ -34,8 +34,8 @@ public class Inventory  {
         this.productExpDate = Month + "/" + Day + "/" + Year;
     }
 
-    public void setID(int ID){
-        this.productIDTemp = ID;
+    public void setID(){
+        this.productIDTemp++;
     }
 
     public String displayName(){
@@ -65,9 +65,13 @@ public class Inventory  {
         System.out.println(this.listModel.toString());
     }
 
-    public void updateProduct(){
-        Product pro = this.listModel.getElementAt(productIDTemp);
-        this.listModel.setElementAt(pro, productIDTemp);
+    public void updateProduct(int indexselect){
+        if (indexselect != -1){
+
+            this.listModel.setElementAt(new Product(productIDTemp, productName, productPrice, productQuantity, productExpDate), indexselect);
+        } else {
+
+        }
     }
 
     
