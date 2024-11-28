@@ -18,6 +18,7 @@ public class GUIMain {
 
 
         //new GUIMangement();
-        new InventoryManagementGUI();
+        new InventoryManagement();
     }
 }
+

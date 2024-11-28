@@ -1,5 +1,5 @@
 import java.util.ArrayList;
-
+import java.util.Comparator;
 import java.util.List;
 
 import javax.swing.DefaultListModel;
@@ -10,17 +10,26 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+
+
 public class Inventory  {
     
     DefaultListModel<Product> listModel = new DefaultListModel<>();
     JList<Product> products = new JList<>(listModel);
     
     int productID;
-    int productIDTemp = 0;
+    
     String productName;
     Double productPrice;
     int productQuantity;
     String productExpDate;
+
+    public void test(){
+        for(int i = 0; i < 5; i++){
+            this.listModel.addElement(new Product(i, "Sardinas", i, 999, "12/17/2029"));
+        }
+    }
+    
 
     public void setName(String name){
         this.productName = name;
@@ -38,9 +47,9 @@ public class Inventory  {
         this.productExpDate = Month + "/" + Day + "/" + Year;
     }
 
-    public void setID(){
-        this.productIDTemp++;
-    }
+    // public void setID(){
+    //     this.productID = productID;
+    // }
 
     public String displayName(){
         return this.productName;
@@ -50,9 +59,47 @@ public class Inventory  {
         return productExpDate;
     }
 
+
+    // sort functions
+
+    public void sortName(){
+        sortModel(listModel, Comparator.comparing(p -> p.getName()));
+    }
+
+    public void sortPrice(){
+        sortModel(listModel, Comparator.comparingDouble(p -> p.getPrice()));
+    }
+
+    public void sortQuantity(){
+        sortModel(listModel, Comparator.comparingInt(p -> p.getQuantity()));
+    }
+
+    public void sortExpDate(){
+        sortModel(listModel, Comparator.comparing(p -> p.getExpDate()));
+    }
+
+
+    private static void sortModel(DefaultListModel<Product> model, Comparator<Product> comparator){
+        List<Product> products = new ArrayList<>();
+        for (int i = 0; i < model.getSize(); i++) {
+            products.add(model.getElementAt(i));
+        }
+
+        // Sort the list
+        products.sort(comparator);
+
+        // Clear and repopulate the model
+        model.clear();
+        for (Product product : products) {
+            model.addElement(product);
+        }
+    }
+
+    
+    // management functions
     
 
-    // Method to add a product to the inventory
+    
     public void addProduct() {
         this.listModel.addElement(new Product(productID, productName, productPrice, productQuantity, productExpDate));
         System.out.println(this.listModel.toString());
@@ -62,7 +109,15 @@ public class Inventory  {
 
     public void removeProduct(int indexselect){
         if (indexselect != -1) {
-            this.listModel.remove(indexselect);
+
+            int confirm = JOptionPane.showConfirmDialog( null, "Are you sure you want to remove the current selected product?");
+            if(confirm == 0){
+                this.listModel.remove(indexselect);
+                products.clearSelection();
+            }else {
+                products.clearSelection();
+            }
+
         } else {
             System.out.println("The product has been already remove");
         }
@@ -70,16 +125,40 @@ public class Inventory  {
     }
 
     public void updateProduct(int indexselect){
-        if (indexselect != -1){
 
-            this.listModel.setElementAt(new Product(productIDTemp, productName, productPrice, productQuantity, productExpDate), indexselect);
-        } else {
+        System.out.println(indexselect);
+        
+        try {
+            if(indexselect != -1){
 
+                String newProductName = productName;
+                String newProductPrice = String.valueOf(productPrice);
+                String newProductQuantity = String.valueOf(productQuantity);
+
+                if(!newProductName.isEmpty()){
+                    System.out.println("yey name");
+                }
+                if(!newProductPrice.isEmpty()){
+                    System.out.println("yey price");
+                }
+                if(!newProductQuantity.isEmpty()){
+                    System.out.println("yey wuantity");
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Selected Product Not Found!", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (Exception e) {
+            
         }
     }
 
+    @SuppressWarnings("rawtypes")
+    public DefaultListModel getListModel(){
+        return listModel;
+    }
 
 
+    // SQL CONNECTOR //
 
     private static final String URL = "jdbc:mysql://localhost:3306/testdb"; // Replace with your database URL
     private static final String USER = "root"; // Replace with your MySQL username
@@ -106,6 +185,7 @@ public class Inventory  {
             System.out.println("Connection failed!");
             e.printStackTrace();
         }
+        
         return connection;
     }
 
