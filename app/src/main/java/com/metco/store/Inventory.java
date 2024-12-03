@@ -105,10 +105,15 @@ public class Inventory  {
     
     public void addProduct() {
         System.out.println(this.listModel.toString());
+        if (listModel.getSize() == 0){
+            productID = 1;
+        } else {
+            productID = listModel.getSize() + 1;
+        }
 
         Product newProduct = new Product(productID, productName, productPrice, productQuantity, productExpDate);
 
-        String sql = "INSERT INTO METCOPRODUCTS (productName, productPrice, productQuantity, productExpDate) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO METCOPRODUCTS (productID, productName, productPrice, productQuantity, productExpDate) VALUES (?, ?, ?, ?, ?)";
 
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -117,10 +122,11 @@ public class Inventory  {
             connection = connectDB.connect();
             preparedStatement = connection.prepareStatement(sql);
 
-            preparedStatement.setString(1, newProduct.getName());
-            preparedStatement.setDouble(2, newProduct.getPrice());
-            preparedStatement.setInt(3, newProduct.getQuantity());
-            preparedStatement.setString(4, newProduct.getExpDate());
+            preparedStatement.setInt(1, newProduct.getID());
+            preparedStatement.setString(2, newProduct.getName());
+            preparedStatement.setDouble(3, newProduct.getPrice());
+            preparedStatement.setInt(4, newProduct.getQuantity());
+            preparedStatement.setString(5, newProduct.getExpDate());
 
             preparedStatement.executeUpdate();
             loadProductsFromDatabase();
