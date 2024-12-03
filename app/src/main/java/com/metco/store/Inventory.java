@@ -8,8 +8,12 @@ import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 
+import com.mysql.cj.protocol.Resultset;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 
@@ -113,8 +117,43 @@ public class Inventory  {
 
     
     public void addProduct() {
-        this.listModel.addElement(new Product(productID, productName, productPrice, productQuantity, productExpDate));
         System.out.println(this.listModel.toString());
+
+        Product newProduct = new Product(productID, productName, productPrice, productQuantity, productExpDate);
+
+        String sql = "INSERT INTO METCOPRODUCTS (productName, productPrice, productQuantity, productExpDate) VALUES (?, ?, ?, ?)";
+
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+
+        try{
+            connection = Inventory.connect();
+            preparedStatement = connection.prepareStatement(sql);
+
+            preparedStatement.setString(1, newProduct.getName());
+            preparedStatement.setDouble(2, newProduct.getPrice());
+            preparedStatement.setInt(3, newProduct.getQuantity());
+            preparedStatement.setString(4, newProduct.getExpDate());
+
+            preparedStatement.executeUpdate();
+            loadProductsFromDatabase();
+
+            System.out.println("Product added");
+        } catch (SQLException e) {
+            System.out.println(e);
+        } finally {
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (preparedStatement != null){
+                    Inventory.disconnect(connection);
+                }
+            } catch (Exception e) {
+                // TODO: handle exception
+            }
+        }
+
 
         this.productID += 1;
     }
@@ -164,6 +203,45 @@ public class Inventory  {
         }
     }
 
+    public void loadProductsFromDatabase(){
+        String sql = "SELECT * FROM METCOPRODUCTS";
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet	= null;
+
+        try {
+            connection = connect();
+            preparedStatement = connection.prepareStatement(sql);
+            resultSet = preparedStatement.executeQuery();
+
+            listModel.clear();
+
+            while (resultSet.next()){
+                int id = resultSet.getInt("productID");
+                String name = resultSet.getString("productName");
+                double price = resultSet.getDouble("productPrice");
+                int quantity = resultSet.getInt("productQuantity");
+                String expDate = resultSet.getString("productExpDate");
+
+                Product product = new Product(id, name, price, quantity, expDate);
+                listModel.addElement(product);
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        } finally {
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     @SuppressWarnings("rawtypes")
     public DefaultListModel getListModel(){
         return listModel;
@@ -172,7 +250,7 @@ public class Inventory  {
 
     // SQL CONNECTOR //
 
-    private static final String URL = "jdbc:mysql://localhost:3306/testdb"; // Replace with your database URL
+    private static final String URL = "jdbc:mysql://localhost:3306/metcodb"; // Replace with your database URL
     private static final String USER = "root"; // Replace with your MySQL username
     private static final String PASSWORD = "@Bsubalayan2024"; // Replace with your MySQL password
 

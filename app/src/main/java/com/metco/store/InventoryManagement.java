@@ -32,31 +32,7 @@ public class InventoryManagement extends javax.swing.JFrame {
         String invPHDay = "Expire Day";
         String invPHYear = "Expire Year";
 
-        inventory.listModel.addElement(new Product(1, "Zohn", 12, 15, "12/15/2004"));
-        inventory.listModel.addElement(new Product(1, "Patrick", 99, 89, "12/15/2004"));
-        inventory.listModel.addElement(new Product(1, "Zohn", 12, 15, "12/15/2004"));
-        inventory.listModel.addElement(new Product(1, "Patrick", 99, 89, "12/15/2004"));
-        inventory.listModel.addElement(new Product(1, "Zohn", 12, 15, "12/15/2004"));
-        inventory.listModel.addElement(new Product(1, "Patrick", 99, 89, "12/15/2004"));
-        inventory.listModel.addElement(new Product(1, "Zohn", 12, 15, "12/15/2004"));
-        inventory.listModel.addElement(new Product(1, "Patrick", 99, 89, "12/15/2004"));
-        inventory.listModel.addElement(new Product(1, "Zohn", 12, 15, "12/15/2004"));
-        inventory.listModel.addElement(new Product(1, "Patrick", 99, 89, "12/15/2004"));
-        inventory.listModel.addElement(new Product(1, "Zohn", 12, 15, "12/15/2004"));
-        inventory.listModel.addElement(new Product(1, "Patrick", 99, 89, "12/15/2004"));
-        inventory.listModel.addElement(new Product(1, "Zohn", 12, 15, "12/15/2004"));
-        inventory.listModel.addElement(new Product(1, "Patrick", 99, 89, "12/15/2004"));
-        inventory.listModel.addElement(new Product(1, "Zohn", 12, 15, "12/15/2004"));
-        inventory.listModel.addElement(new Product(1, "Patrick", 99, 89, "12/15/2004"));
-        inventory.listModel.addElement(new Product(1, "Zohn", 12, 15, "12/15/2004"));
-        inventory.listModel.addElement(new Product(1, "Patrick", 99, 89, "12/15/2004"));
-        inventory.listModel.addElement(new Product(1, "Zohn", 12, 15, "12/15/2004"));
-        inventory.listModel.addElement(new Product(1, "Patrick", 99, 89, "12/15/2004"));
-        inventory.listModel.addElement(new Product(1, "Zohn", 12, 15, "12/15/2004"));
-        inventory.listModel.addElement(new Product(1, "Patrick", 99, 89, "12/15/2004"));
-        inventory.listModel.addElement(new Product(1, "Zohn", 12, 15, "12/15/2004"));
-        inventory.listModel.addElement(new Product(1, "Patrick", 99, 89, "12/15/2004"));
-
+        inventory.loadProductsFromDatabase();
         updateProductList();
 
 
