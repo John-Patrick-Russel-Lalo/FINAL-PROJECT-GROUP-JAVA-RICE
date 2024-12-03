@@ -11,7 +11,7 @@ import javax.swing.DefaultListModel;
 import org.jdesktop.swingx.prompt.*;
 
 
-public class InventoryManagement extends javax.swing.JFrame {
+public class InventoryManagement {
 
     
     Inventory inventory = new Inventory();

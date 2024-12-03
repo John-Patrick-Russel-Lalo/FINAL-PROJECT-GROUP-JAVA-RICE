@@ -158,48 +158,86 @@ public class Inventory  {
         this.productID += 1;
     }
 
-    public void removeProduct(int indexselect){
+    public void removeProduct(int indexselect) {
         if (indexselect != -1) {
-
-            int confirm = JOptionPane.showConfirmDialog( null, "Are you sure you want to remove the current selected product?");
-            if(confirm == 0){
-                this.listModel.remove(indexselect);
-                products.clearSelection();
-            }else {
-                products.clearSelection();
+            Product productToRemove = listModel.getElementAt(indexselect);
+            int productIDToRemove = productToRemove.getID();
+    
+            String sql = "DELETE FROM METCOPRODUCTS WHERE productID = ?";
+            Connection connection = null;
+            PreparedStatement preparedStatement = null;
+    
+            try {
+                connection = Inventory.connect();
+                preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setInt(1, productIDToRemove);
+                preparedStatement.executeUpdate();
+                loadProductsFromDatabase();
+    
+                System.out.println("Product removed");
+            } catch (SQLException e) {
+                System.out.println(e);
+            } finally {
+                try {
+                    if (preparedStatement != null) {
+                        preparedStatement.close();
+                    }
+                    if (preparedStatement != null) {
+                        Inventory.disconnect(connection);
+                    }
+                } catch (Exception e) {
+                    // TODO: handle exception
+                }
             }
-
         } else {
-            System.out.println("The product has been already remove");
+            System.out.println("The product has been already removed");
         }
-        System.out.println(this.listModel.toString());
     }
 
-    public void updateProduct(int indexselect){
-
-        System.out.println(indexselect);
-        
-        try {
-            if(indexselect != -1){
-
-                String newProductName = productName;
-                String newProductPrice = String.valueOf(productPrice);
-                String newProductQuantity = String.valueOf(productQuantity);
-
-                if(!newProductName.isEmpty()){
-                    System.out.println("yey name");
+    public void updateProduct(int indexselect) {
+        if (indexselect != -1) {
+            Product productToUpdate = listModel.getElementAt(indexselect);
+            int productIDToUpdate = productToUpdate.getID();
+    
+            String newProductName = this.productName; // Assuming these values are set before calling this method
+            Double newProductPrice = this.productPrice;
+            int newProductQuantity = this.productQuantity;
+            String newProductExpDate = this.productExpDate;
+    
+            String sql = "UPDATE METCOPRODUCTS SET productName = ?, productPrice = ?, productQuantity = ?, productExpDate = ? WHERE productID = ?";
+            Connection connection = null;
+            PreparedStatement preparedStatement = null;
+    
+            try {
+                connection = Inventory.connect();
+                preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setString(1, newProductName);
+                preparedStatement.setDouble(2, newProductPrice);
+                preparedStatement.setInt(3, newProductQuantity);
+                preparedStatement.setString(4, newProductExpDate);
+                preparedStatement.setInt(5, productIDToUpdate);
+    
+                int rowsAffected = preparedStatement.executeUpdate();
+                if (rowsAffected > 0) {
+                    System.out.println("Product updated successfully");
+                    loadProductsFromDatabase(); // Refresh the list after updating
+                } else {
+                    System.out.println("No product found with the given ID");
                 }
-                if(!newProductPrice.isEmpty()){
-                    System.out.println("yey price");
+            } catch (SQLException e) {
+                System.out.println("Error updating product: " + e.getMessage());
+            } finally {
+                try {
+                    if (preparedStatement != null) {
+                        preparedStatement.close();
+                    }
+                    Inventory.disconnect(connection);
+                } catch (SQLException e) {
+                    System.out.println("Error closing resources: " + e.getMessage());
                 }
-                if(!newProductQuantity.isEmpty()){
-                    System.out.println("yey wuantity");
-                }
-            } else {
-                JOptionPane.showMessageDialog(null, "Selected Product Not Found!", "Error", JOptionPane.ERROR_MESSAGE);
             }
-        } catch (Exception e) {
-            
+        } else {
+            JOptionPane.showMessageDialog(null, "Selected Product Not Found!", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
