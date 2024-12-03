@@ -5,11 +5,11 @@ import java.sql.Connection;
 public class Main {
     public static void main(String[] args) {
 
-        Connection conn = Inventory.connect();
+        Connection conn = connectDB.connect();
 
         if (conn != null){
             System.out.println("Connected to Database!");
-            Inventory.disconnect(conn);
+            connectDB.disconnect(conn);
         }
 
         //new GUIMangement();

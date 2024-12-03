@@ -1,4 +1,10 @@
 package com.metco.store;
+
+import java.awt.Color;
+
+import javax.swing.JTextField;
+import javax.swing.text.JTextComponent;
+
 public class ComponentsGUI extends javax.swing.JFrame {
 
     /**
@@ -34,6 +40,7 @@ public class ComponentsGUI extends javax.swing.JFrame {
         updateBtn = new javax.swing.JButton();
         removeBtn = new javax.swing.JButton();
         sortBox = new javax.swing.JComboBox<>();
+        searchBar = new javax.swing.JTextField(); 
 
         jLabel1.setText("jLabel1");
 
@@ -117,6 +124,8 @@ public class ComponentsGUI extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(searchBar, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(addBtn)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(updateBtn)
@@ -131,6 +140,7 @@ public class ComponentsGUI extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(searchBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(addBtn)
                     .addComponent(updateBtn)
                     .addComponent(removeBtn)
@@ -175,6 +185,20 @@ public class ComponentsGUI extends javax.swing.JFrame {
             .addComponent(MainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
+        Color customColor = new Color(190, 36, 1);
+        Color customColorSilver = new Color(105, 105, 105);
+        Color customBlack = new Color(40, 40, 40);
+
+
+        jPanel1.setBackground(customColor);
+        jPanel2.setBackground(customColor);
+        jPanel3.setBackground(customColorSilver);
+        MainPanel.setBackground(customBlack);
+
+        
+
+        
+
         pack();
         setVisible(true);
     }// </editor-fold>//GEN-END:initComponents
@@ -203,4 +227,5 @@ public class ComponentsGUI extends javax.swing.JFrame {
     javax.swing.JScrollPane jScrollPane1;
     javax.swing.JList<Product> listProducts;
     // End of variables declaration//GEN-END:variables
+    javax.swing.JTextField searchBar;
 }

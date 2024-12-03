@@ -3,15 +3,9 @@ package com.metco.store;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
-import javax.swing.JOptionPane;
-
-import com.mysql.cj.protocol.Resultset;
-
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -22,7 +16,7 @@ public class Inventory  {
     
     DefaultListModel<Product> listModel = new DefaultListModel<>();
     JList<Product> products = new JList<>(listModel);
-    
+    connectDB connDB = new connectDB();
     int productID;
     
     String productName;
@@ -49,10 +43,6 @@ public class Inventory  {
         this.productExpDate = Month + "/" + Day + "/" + Year;
     }
 
-    // public void setID(){
-    //     this.productID = productID;
-    // }
-
     public String displayName(){
         return this.productName;
     }
@@ -61,8 +51,6 @@ public class Inventory  {
         return productExpDate;
     }
 
-
-    // sort functions
 
     public void sortName(){
         sortModel(listModel, Comparator.comparing(p -> p.getName()));
@@ -87,10 +75,8 @@ public class Inventory  {
             products.add(model.getElementAt(i));
         }
 
-        // Sort the list
         products.sort(comparator);
 
-        // Clear and repopulate the model
         model.clear();
         for (Product product : products) {
             model.addElement(product);
@@ -101,6 +87,7 @@ public class Inventory  {
         List<Product> filteredProducts = new ArrayList<>();
         for (int i = 0; i < listModel.getSize(); i++) {
             Product product = listModel.getElementAt(i);
+            // Check if the query matches the product's name, price, quantity, or expiration date
             if (product.getName().toLowerCase().contains(query.toLowerCase()) ||
                 String.valueOf(product.getPrice()).contains(query) ||
                 String.valueOf(product.getQuantity()).contains(query) ||
@@ -127,7 +114,7 @@ public class Inventory  {
         PreparedStatement preparedStatement = null;
 
         try{
-            connection = Inventory.connect();
+            connection = connectDB.connect();
             preparedStatement = connection.prepareStatement(sql);
 
             preparedStatement.setString(1, newProduct.getName());
@@ -147,7 +134,7 @@ public class Inventory  {
                     preparedStatement.close();
                 }
                 if (preparedStatement != null){
-                    Inventory.disconnect(connection);
+                    connectDB.disconnect(connection);
                 }
             } catch (Exception e) {
                 // TODO: handle exception
@@ -168,7 +155,7 @@ public class Inventory  {
             PreparedStatement preparedStatement = null;
     
             try {
-                connection = Inventory.connect();
+                connection = connectDB.connect();
                 preparedStatement = connection.prepareStatement(sql);
                 preparedStatement.setInt(1, productIDToRemove);
                 preparedStatement.executeUpdate();
@@ -183,7 +170,7 @@ public class Inventory  {
                         preparedStatement.close();
                     }
                     if (preparedStatement != null) {
-                        Inventory.disconnect(connection);
+                        connectDB.disconnect(connection);
                     }
                 } catch (Exception e) {
                     // TODO: handle exception
@@ -199,45 +186,67 @@ public class Inventory  {
             Product productToUpdate = listModel.getElementAt(indexselect);
             int productIDToUpdate = productToUpdate.getID();
     
-            String newProductName = this.productName; // Assuming these values are set before calling this method
-            Double newProductPrice = this.productPrice;
-            int newProductQuantity = this.productQuantity;
-            String newProductExpDate = this.productExpDate;
+            StringBuilder sql = new StringBuilder("UPDATE METCOPRODUCTS SET ");
+            List<Object> parameters = new ArrayList<>();
     
-            String sql = "UPDATE METCOPRODUCTS SET productName = ?, productPrice = ?, productQuantity = ?, productExpDate = ? WHERE productID = ?";
-            Connection connection = null;
-            PreparedStatement preparedStatement = null;
+            // Check each field and append to the SQL statement if it's changed
+            if (productName != null && !productName.isEmpty()) {
+                sql.append("productName = ?, ");
+                parameters.add(productName);
+            }
+            if (productPrice != null) {
+                sql.append("productPrice = ?, ");
+                parameters.add(productPrice);
+            }
+            if (productQuantity >= 0) {
+                sql.append("productQuantity = ?, ");
+                parameters.add(productQuantity);
+            }
+            if (productExpDate != null && !productExpDate.isEmpty()) {
+                sql.append("productExpDate = ?, ");
+                parameters.add(productExpDate);
+            }
     
-            try {
-                connection = Inventory.connect();
-                preparedStatement = connection.prepareStatement(sql);
-                preparedStatement.setString(1, newProductName);
-                preparedStatement.setDouble(2, newProductPrice);
-                preparedStatement.setInt(3, newProductQuantity);
-                preparedStatement.setString(4, newProductExpDate);
-                preparedStatement.setInt(5, productIDToUpdate);
+            if (parameters.size() > 0) {
+                sql.setLength(sql.length() - 2);
+                sql.append(" WHERE productID = ?");
+                parameters.add(productIDToUpdate);
     
-                int rowsAffected = preparedStatement.executeUpdate();
-                if (rowsAffected > 0) {
-                    System.out.println("Product updated successfully");
-                    loadProductsFromDatabase(); // Refresh the list after updating
-                } else {
-                    System.out.println("No product found with the given ID");
-                }
-            } catch (SQLException e) {
-                System.out.println("Error updating product: " + e.getMessage());
-            } finally {
+                Connection connection = null;
+                PreparedStatement preparedStatement = null;
+    
                 try {
-                    if (preparedStatement != null) {
-                        preparedStatement.close();
+                    connection = connectDB.connect();
+                    preparedStatement = connection.prepareStatement(sql.toString());
+    
+                    // Set the parameters
+                    for (int i = 0; i < parameters.size(); i++) {
+                        preparedStatement.setObject(i + 1, parameters.get(i));
                     }
-                    Inventory.disconnect(connection);
+    
+                    preparedStatement.executeUpdate();
+                    loadProductsFromDatabase(); // Reload products from database to reflect changes
+    
+                    System.out.println("Product updated");
                 } catch (SQLException e) {
-                    System.out.println("Error closing resources: " + e.getMessage());
+                    System.out.println(e);
+                } finally {
+                    try {
+                        if (preparedStatement != null) {
+                            preparedStatement.close();
+                        }
+                        if (connection != null) {
+                            connectDB.disconnect(connection);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
+            } else {
+                System.out.println("No fields to update.");
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Selected Product Not Found!", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println("No product selected for update.");
         }
     }
 
@@ -248,7 +257,7 @@ public class Inventory  {
         ResultSet resultSet	= null;
 
         try {
-            connection = connect();
+            connection = connectDB.connect();
             preparedStatement = connection.prepareStatement(sql);
             resultSet = preparedStatement.executeQuery();
 
@@ -280,60 +289,10 @@ public class Inventory  {
         }
     }
 
+    
     @SuppressWarnings("rawtypes")
     public DefaultListModel getListModel(){
         return listModel;
     }
-
-
-    // SQL CONNECTOR //
-
-    private static final String URL = "jdbc:mysql://localhost:3306/metcodb"; // Replace with your database URL
-    private static final String USER = "root"; // Replace with your MySQL username
-    private static final String PASSWORD = "@Bsubalayan2024"; // Replace with your MySQL password
-
-    /**
-     * Establishes a connection to the MySQL database.
-     * 
-     * @return Connection object or null if the connection fails
-     */
-    public static Connection connect() {
-        Connection connection = null;
-        try {
-            // Load MySQL JDBC driver (optional for newer versions)
-            Class.forName("com.mysql.cj.jdbc.Driver");
-
-            // Establish connection
-            connection = DriverManager.getConnection(URL, USER, PASSWORD);
-            System.out.println("Connected to the database!");
-        } catch (ClassNotFoundException e) {
-            System.out.println("MySQL JDBC Driver not found!");
-            e.printStackTrace();
-        } catch (SQLException e) {
-            System.out.println("Connection failed!");
-            e.printStackTrace();
-        }
-        
-        return connection;
-    }
-
-    /**
-     * Closes the database connection.
-     * 
-     * @param connection The connection object to close
-     */
-    public static void disconnect(Connection connection) {
-        if (connection != null) {
-            try {
-                connection.close();
-                System.out.println("Connection closed.");
-            } catch (SQLException e) {
-                System.out.println("Failed to close the connection.");
-                e.printStackTrace();
-            }
-        }
-    }
-
-    
     
 }
