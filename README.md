@@ -47,7 +47,7 @@ The project is organized into modules that focus on specific functionalities:
 ## How to Use
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/John-Patrick-Russel-Lalo/FINAL-PROJECT-GROUP-JAVA-RICE
+   git clone https://github.com/John-Patrick-Russel-Lalo/FINAL-PROJECT-OOP-JAVA-RICE
    ```
 
    **or**
@@ -56,7 +56,7 @@ The project is organized into modules that focus on specific functionalities:
    
    *just copy this url*
    ```
-   https://github.com/John-Patrick-Russel-Lalo/FINAL-PROJECT-GROUP-JAVA-RICE
+   https://github.com/John-Patrick-Russel-Lalo/FINAL-PROJECT-OOP-JAVA-RICE
    ```
 
 
