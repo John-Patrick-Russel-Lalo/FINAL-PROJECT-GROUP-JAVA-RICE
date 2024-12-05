@@ -31,7 +31,7 @@ public class ComponentsGUI extends javax.swing.JFrame {
     void initComponents() {
 
         setTitle("Metco Store - Inventory Management");
-        ImageIcon logo = new ImageIcon("app/src/main/java/com/metco/img/metco_store_logo.jpg");
+        ImageIcon logo = new ImageIcon("./src/main/java/com/metco/img/metco_store_logo.jpg");
         setIconImage(logo.getImage());
         JLabel logoLabel = new JLabel(logo);
         getContentPane().add(logoLabel, BorderLayout.NORTH);
