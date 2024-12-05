@@ -44,7 +44,7 @@ Our primary objectives for this project include the following features:
 
 ## Project Structure
 The project is organized into modules that focus on specific functionalities:
-- **Frontend (GUI)**: Built using JavaFX/Swing, providing a graphical interface for user interaction.
+- **Frontend (GUI)**: Built using Swing, providing a graphical interface for user interaction.
 - **Backend (Inventory and List System)**: Core logic for inventory management, including tracking, categorizing, and handling data for inventory and lists.
 - **Database**: Centralized storage using MySQL to maintain data integrity and support smooth data operations.
 
