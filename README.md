@@ -31,10 +31,6 @@ Our primary objectives for this project include the following features:
 4. **Inventory System**:
    - Track stock levels in real time, automatically updating quantities when items are added or sold.
 
-5. **List System**:
-   - Create custom lists based on specific criteria.
-   - Enable efficient tracking and grouping of items for organized management.
-
 ---
 
 ## Developers:
