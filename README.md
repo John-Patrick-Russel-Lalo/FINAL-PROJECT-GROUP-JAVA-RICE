@@ -30,7 +30,6 @@ Our primary objectives for this project include the following features:
 
 4. **Inventory System**:
    - Track stock levels in real time, automatically updating quantities when items are added or sold.
-   - Generate alerts or notifications for low-stock items and upcoming expiration dates.
 
 5. **List System**:
    - Create custom lists based on specific criteria.
